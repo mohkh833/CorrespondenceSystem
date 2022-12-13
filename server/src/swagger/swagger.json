@@ -1,0 +1,1083 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Correspondence App API documentation",
+        "version": "1.0.0",
+        "title": "Correspondence App API",
+        "contact": {
+            "email": "abc@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http"],
+    "host": "localhost:5000",
+    "basePath": "/",
+    "paths" : {
+        "/messages" : {
+            "get" : {
+                "summary" : "Get Inbox Messages",
+                "description": "Get all Inbox Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                        "name":"page",
+                        "in":"query",
+                        "description":"page Number",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            },
+            "post" : {
+                "summary" : "Send the Message",
+                "description": "Send the Message",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "data object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data" : {
+                                    "type": "object",
+                                    "$ref": "#/definitions/content"
+                                } 
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/messages/{id}":{
+            "get":{
+                "summary" : "Get Thread Details",
+                "description": "Get Thread Details",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {  
+                    "name":"title",
+                    "in":"query",
+                    "description":"page Title",
+                    "required":false,
+                    "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/sent":{
+            "get" : {
+                "summary" : "Get Sent Messages",
+                "description": "Get all Sent Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                        "name":"page",
+                        "in":"query",
+                        "description":"page Number",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/status/{id}" : {
+            "put" : {
+                "summary" : "Mark Message read",
+                "description": "Mark Message read",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Message id that needs to be read",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/star" : {
+            "get" : {
+                "summary" : "Get Starred Messages",
+                "description": "Get all Starred Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                    "name":"page",
+                    "in":"query",
+                    "description":"page Number",
+                    "required":false,
+                    "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/star/{id}" :{
+            "put" : {
+                "summary" : "Mark Message Starred",
+                "description": "Mark Message Starred",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Message id that needs to be starred",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "starred object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "starred" : {
+                                    "type": "boolean"
+                                },
+                                "threadId" :{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name":"location",
+                        "in":"query",
+                        "description":"page location",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/count":{
+            "get":{
+                "summary" : "Get Thread Statistics",
+                "description": "Get Thread Statistics",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/messages/delete":{
+            "get" : {
+                "summary" : "Get Trashed Messages",
+                "description": "Get all Trashed Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                        "name":"page",
+                        "in":"query",
+                        "description":"page Number",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "summary" : "Delete Thread",
+                "description": "Delete Thread",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "arrOfIds": {
+                                    "type":"array"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/deleteThreads":{
+            "put":{
+                "summary" : "Delete Threads",
+                "description": "Delete Threads",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of threadIds",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "threadIds": {
+                                    "type":"array"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/draft":{
+            "get" : {
+                "summary" : "Get Drafted Messages",
+                "description": "Get all Drafted Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                        "name":"page",
+                        "in":"query",
+                        "description":"page Number",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "summary" : "Draft Thread",
+                "description": "Draft Thread",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/draft/{id}":{
+            "get":{
+                "summary" : "Get Drafted Message Details",
+                "description": "Get Drafted Message Details",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            },
+            "put":{
+                "summary" : "unDrafted Message",
+                "description": "unDrafted Message",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                }
+                            }
+                        }
+                    },
+                    {  
+                        "name":"draft",
+                        "in":"query",
+                        "description":"Check if the message is drafted or not",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/prev/{id}/{lastReply}":{
+            "get":{
+                "summary" : "Paginate Previous",
+                "description": "Paginate Previous",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastReply",
+                        "in": "path",
+                        "description": "lastReply",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {  
+                        "name":"title",
+                        "in":"query",
+                        "description":"page title",
+                        "required":false,
+                        "type":"string"
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/next/{id}/{lastReply}":{
+            "get":{
+                "summary" : "Paginate Next",
+                "description": "Paginate Next",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "lastReply",
+                        "in": "path",
+                        "description": "lastReply",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {  
+                        "name":"title",
+                        "in":"query",
+                        "description":"page title",
+                        "required":false,
+                        "type":"string"
+                    }
+
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/search":{
+            "get" : {
+                "summary" : "Search Messages",
+                "description": "Search Messages",
+                "produces": ["application/json"],
+                "parameters": [
+                    {  
+                        "name":"page",
+                        "in":"query",
+                        "description":"page Number",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"title",
+                        "in":"query",
+                        "description":"page Title",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"limit",
+                        "in":"query",
+                        "description":"page Limit",
+                        "required":false,
+                        "type":"string"
+                    },
+                    {  
+                        "name":"query",
+                        "in":"query",
+                        "description":"query",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/replies":{
+            "post":{
+                "summary" : "reply To message",
+                "description": "reply To message",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                },
+                                "replyTo":{
+                                    "type":"string"
+                                },
+                                "threadId":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/replies/{replyId}":{
+            "get" : {
+                "summary" : "Get Reply by Id",
+                "description": "Get Reply by Id",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "replyId",
+                        "in": "path",
+                        "description": "get Thread Replies",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/replies/{id}/draft":{
+            "put":{
+                "summary" : "unDrafted Message",
+                "description": "unDrafted Message",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                },
+                                "threadId":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    {  
+                        "name":"isReply",
+                        "in":"query",
+                        "description":"Check if the message is reply or not",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },  
+        "/messages/replies/{replyId}/draft":{
+            "get" : {
+                "summary" : "Get Drafted Reply",
+                "description": "Get Drafted Reply",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "replyId",
+                        "in": "path",
+                        "description": "get Drafted Reply",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/content"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/replies/{id}/{replyId}/undraft":{
+            "put":{
+                "summary" : "unDrafted Replies",
+                "description": "unDrafted Replies",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Thread id to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "replyId",
+                        "in": "path",
+                        "description": "Thread replyId to get the drafted details",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                },
+                                "replyTo":{
+                                    "type" :"string"
+                                }
+                            }
+                        }
+                    },
+                    {  
+                        "name":"draft",
+                        "in":"query",
+                        "description":"Check if the message is drafted or not",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/messages/replies/edit-draft/{draftedId}":{
+            "put":{
+                "summary" : "edit drafted Replies",
+                "description": "edit drafted Replies",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "draftedId",
+                        "in": "path",
+                        "description": "drafted reply id to get the edit",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Array of objects",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type":"object",
+                                    "$ref": "#/definitions/content"
+                                },
+                                "replyTo":{
+                                    "type" :"string"
+                                }
+                            }
+                        }
+                    },
+                    {  
+                        "name":"draft",
+                        "in":"query",
+                        "description":"Check if the message is drafted or not",
+                        "required":false,
+                        "type":"string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/form-render":{
+            "get":{
+                "summary" : "Render Form",
+                "description": "Render Form",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    }, 
+    "definitions": {
+        "Correspondence" :{
+            "type":"object",
+            "properties":{
+                "threadId":{
+                    "type":"string"
+                },
+                "id": {
+                    "type": "String"
+                },
+                "name":{
+                    "type": "String"
+                
+                },
+                "type":{
+                    "type":"String"
+                },
+                "parentId":{
+                    "type": "String"
+                },
+                "children":{
+                    "type": "string array"
+                },
+                "path":{
+                    "type":"String"
+                },
+                "totalSize":{
+                    "type":"integer"
+                },
+                "createdDate": {
+                    "type": "string", "format": "date-time"
+                },
+                "createdBy": {
+                    "type": "string", "format": "date-time"
+                },
+                "contentTypeId":{
+                    "type":"string"
+                },
+                "allowedDocTypes":{
+                    "type": "array"
+                },
+                "binaryDate": {
+                    "type":"String"
+                    
+                },
+                "modificationDate": {
+                    "type": "string", "format": "date-time"
+                },
+                "modificationBy": {
+                    "type":"string"
+                },
+                "contentTypeGroupId":{
+                    "type":"string"
+                },
+                "favouriteusers":{
+                    "type":"array"
+                },
+                "isCheckedOut":{
+                    "type":"boolean"
+                },
+                "checkOutBy":{
+                    "type":"array"
+                },
+                "checkOutDate":{
+                    "type": "string", "format": "date-time"
+                },
+                "ACP":{
+                    "type":"object",
+                    "DACL":{
+                        "type":"Array"
+                    },
+                    "IACL":{
+                        "type":"array"
+                    },
+                    "default":{
+                        "type":"object",
+                        "objectID":{
+                            "type":"string"
+                        },
+                        "permissionLevelId":{
+                            "type":"string"
+                        },
+                        "isUser":{
+                            "type":"boolean"
+                        },
+                        "guid":{
+                            "type":"string"
+                        }
+                    },
+                    "SHACL":{"type":"array"}
+                },
+                "isBroke":{
+                    "type":"boolean"
+                },
+                "newPath": {
+                    "type":"string"
+                },
+                "userInfo":{
+                    "type":"object",
+                    "$ref": "#/definitions/userInfo"
+                },
+                "contentTypeInfo":{
+                    "type":"object",
+                    "$ref": "#/definitions/contentTypeInfo"
+                    
+                },
+                "assignedProcesses": {
+                    "type":"array"
+                },
+                "fields": {
+                    "type": "array"
+                },
+                "content":{
+                    "type":"object",
+                    "$ref": "#/definitions/content"
+                }
+            }
+        },
+    "contentTypeInfo":{
+            "type":"object",
+            "properties":{
+            "id":{
+                "type":"String"
+            },
+            "title":{
+                "type":"String"
+            },
+            "groupId":{
+                "type":"String"
+            },
+            "key":{
+                "type":"String"
+            }
+        }
+    },
+    "userInfo":{
+        "type":"object",
+        "properties":{
+            "id":{
+                "type":"String"
+            },
+            "email":{
+                "type":"String"
+            },
+            "fullName":{
+                "type":"String"
+            },
+            "ImageUrl":{
+                "type":"String"
+            }
+        }
+    },
+    "content":{
+        "type":"object",
+        "properties":{
+        "correspondence_no" : {"type":"string"},
+        "correspondence_type": {"type":"string"},
+        "entry_no": {"type":"string"},
+        "from_entity":{"type":"string"},
+        "from_department":{"type":"string"},
+        "from_user":{"type":"string"},
+        "from_email":{"type":"string"},
+        "entity_address":{"type":"string"},
+        "cc_entity": {"type":"array"},
+        "to_entity": {"type":"string"},
+        "to_department":{"type":"string"},
+        "received_date":{ "type": "string", "format": "date-time"},
+        "received_user":{"type":"string"},
+        "sent_date":{ "type": "string", "format": "date-time"},
+        "priority": {"type":"string"},
+        "classification":{"type":"string"},
+        "correspondence_subject":{"type":"string"},
+        "correspondence_body":{"type":"string"},
+        "await_reply": {"type":"boolean"},
+        "message_status":{
+            "type": "string"
+        },
+        "attached_docs_ids":{
+            "type":"[]"
+        },
+        "due_date": {
+            "type": "string", "format": "date-time"
+        },
+        "Starred":{
+            "type": "boolean"
+        },
+        "isDeleted":{
+            "type": "boolean"
+        },
+        "trashDate":{
+            "type": "string", "format": "date-time"
+        },
+        "draftedDate":{
+            "type": "string", "format": "date-time"
+        },
+        "isDrafted":{
+            "type": "boolean"
+        },
+
+        "replyTo":{
+            "type":"string"
+        }
+    }}
+
+    }
+}
