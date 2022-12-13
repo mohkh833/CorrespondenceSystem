@@ -1,0 +1,82 @@
+<div id="js-inbox-menu" class="flex-wrap position-relative bg-white slide-on-mobile slide-on-mobile-left doNotPrint">
+    <div class="position-absolute pos-top pos-bottom w-100">
+        <div class="d-flex h-100 flex-column">
+            <div class="px-3 px-sm-4 px-lg-5 py-4 align-items-center">
+                <div class="btn-group btn-block" role="group" aria-label="Button group with nested dropdown ">
+                    
+                    
+                        <button routerLink="/send" type="button" class="btn btn-danger btn-block fs-md" data-action="toggle" data-class="d-flex" data-target="#panel-compose" data-focus="message-to">
+                            {{"HOME.COMPOSE" | translate}}
+                        </button>
+                    
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle px-2 js-waves-off" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu p-0" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Work group A</a>
+                            <a class="dropdown-item" href="#">New page</a>
+                            <a class="dropdown-item" href="#">Edit signature</a>
+                            <div class="dropdown-divider m-0"></div>
+                            <a class="dropdown-item" href="#"> <i class="fas fa-plus width-1"></i> Add more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 pr-3">
+                <a routerLink="/home" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md font-weight-bold d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0  "  [ngClass]="{
+                    active: inboxActive
+                  }" (click)="onClick()"> 
+                    <div >
+                        <i class="fas fa-folder-open width-1"></i>{{ 'HOME.INBOX' | translate }}
+                    </div>
+                    <div class="fw-400 fs-xs js-unread-emails-count">({{this.messageService.unreadCount}})</div>
+                </a>
+                <a routerLink="/starred" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0" [ngClass]="{
+                    active: starredActive
+                }" (click)="onClick()">
+                    <div>
+                        <i class="fas fa-star width-1"></i>{{ 'HOME.STARRED' | translate }}
+                    </div>
+                    <div class="fw-400 fs-xs">({{this.messageService.starredCount}})</div>
+                </a>
+                <a routerLink="/draft" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0" [ngClass]="{
+                    active: draftActive
+                }" (click)="onClick()">
+                    <div>
+                        <i class="fas fa-edit width-1"></i>{{ 'HOME.DRAFT' | translate }}
+                    </div>
+                    <div class="fw-400 fs-xs">({{this.messageService.draftedCount}})</div>
+                </a>
+                <a  routerLink="/sent" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md font-weight-bold d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0 " [ngClass]="{
+                    active: sentActive
+                }" (click)="onClick()">
+                    <div>
+                        <i class="fas fa-paper-plane width-1"></i>{{ 'HOME.SENT' | translate }}
+                    </div>
+                    <div class="fw-400 fs-xs">({{this.messageService.sentCount}})</div>
+                </a>
+                <a href="javascript:void(0)" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0">
+                    <div>
+                        <i class="fas fa-exclamation-triangle width-1"></i>{{ 'HOME.DETAILS' | translate }}
+                    </div>
+                    
+                </a>
+
+                <a routerLink="/trash" class="dropdown-item px-3 px-sm-4 pr-lg-3 pl-lg-5 py-2 fs-md d-flex justify-content-between rounded-pill border-top-left-radius-0 border-bottom-left-radius-0" [ngClass]="{
+                    active: trashActive
+                }" (click)="onClick()">
+                    <div>
+                        <i class="fas fa-trash  width-1"></i>{{ 'HOME.TRASH' | translate }}
+                    </div>
+                    <div class="fw-400 fs-xs">({{this.messageService.trashedCount}})</div>
+                </a>
+                
+            </div>
+
+                <!-- <select #langSelect (change)="translate.use(langSelect.value)" style="margin-top:550px; margin-left:10px; margin-right:10px;"> 
+                    <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+                </select> -->
+
+        </div>
+        
+    </div>
+</div>

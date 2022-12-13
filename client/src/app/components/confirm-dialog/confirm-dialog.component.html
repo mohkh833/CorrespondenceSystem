@@ -1,0 +1,22 @@
+<!-- <button style="margin: 50px; padding: 10px" type="button" class="btn btn-primary" (click)="openPopup()">Show Data
+</button> -->
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation Message</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="closePopup()">
+                    Yes
+                </button>
+                <button type="button" class="btn btn-danger" (click)="closePopup()">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

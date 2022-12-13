@@ -1,0 +1,129 @@
+
+    <div class="d-flex flex-column flex-grow-1 bg-white">
+      <div class="flex-grow-0">
+        <div
+          class="d-flex align-items-center pl-2 pr-3 py-3 pl-sm-3 pr-sm-4 py-sm-4 px-lg-5 py-lg-4 border-faded border-top-0 border-left-0 border-right-0 flex-shrink-0">
+          <a href="javascript:void(0);"
+            class="pl-3 pr-3 py-2 d-flex d-lg-none align-items-center justify-content-center mr-2 btn"
+            data-action="toggle" data-class="slide-on-mobile-left-show" data-target="#js-inbox-menu">
+            <i class="fal fa-ellipsis-v h1 mb-0"></i>
+          </a>
+          <h1 class="subheader-title">{{"COMPOSE.NEW MESSAGE" | translate}}</h1>
+          <div class="d-flex position-relative ml-auto hidden-lg-down" style="max-width: 23rem">
+            <!-- <i class="fas fa-search position-absolute pos-left fs-lg px-3 py-2 mt-1"></i> -->
+            <!-- <input type="text" class="form-control bg-subtlelight pl-6" placeholder="Filter emails" /> -->
+          </div>
+        </div>
+      </div>
+      <div class="flex-wrap align-items-center flex-grow-1 position-relative bg-white mx-lg-3"style="height: 80vh;" >
+        <div class="position-absolute pos-top pos-bottom w-100 section"   style="overflow:hidden; overflow-y:auto;">
+          <form [formGroup]="messageForm">
+            <div class="d-flex h-500 flex-column" >
+              <div class="px-3" >
+                <!-- <input id="message-to" type="text" formControlName="correspondence_no"
+                  placeholder="Correspondence Number"
+                  
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5"
+                  tabindex="2" />
+                <button class="position-absolute pos-right pos-top mt-3 mr-4" (click)="showCC()"
+                  style="background: none; border: none">
+                  Cc
+                </button>
+                <input *ngIf="isShown" type="text" formControlName="cc_entity" placeholder="Cc"
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                  tabindex="3" />
+                <input id="message-to" type="text" formControlName="correspondence_type"
+                  placeholder="Correspondence Type"
+                  
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5"
+                  tabindex="2" />
+
+                <input type="text" formControlName="correspondence_subject" placeholder="Correspondence Subject"
+                  
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                  tabindex="4" />
+                <input id="message-to" type="text" formControlName="entry_no" placeholder="Entry Number"
+                  
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5"
+                  tabindex="2" />
+
+                <input type="text" formControlName="to_entity" placeholder="To"
+                  
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                  tabindex="4" />
+                <input type="text" formControlName="to_department" placeholder="To Department"
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                  tabindex="4" />
+
+                <select formControlName="priority"
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5">
+                  <option value="" selected disabled>Select Prority</option>
+                  <option value="High">High</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Low">Low</option>
+                </select>
+                <select formControlName="classification"
+                  class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5">
+                  <option value="" selected disabled>
+                    Select Classification
+                  </option>
+                  <option value="Confidential">Confidential</option>
+                  <option value="Normal">Normal</option>
+                </select>
+                <div class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                  style="display: flex; justify-content: space-between">
+                  <label tabindex="4"> Await Reply </label> 
+                  <input type="checkbox"  checked=true formControlName="await_reply" style="justify-content: flex-end" id="editableContent"  />
+                </div>
+                <div class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2"
+                style="display: flex; justify-content: space-between">
+                  <label tabindex="4"> Due Date </label>
+                  <input type="date" placeholder="dd-mm-yyyy" [min]="currentDate" style="justify-content: flex-end" formControlName="due_date">
+                </div> -->
+                <!--attached docs id-->
+                <formio [form]="formSrc" (submit)="getDataFromFormIO($event)"  [submission]='submissionValue' (change)="getDataDraftedMessage($event)"></formio>
+                <!-- <div class="flex-1" style="overflow-y: auto;">
+                  <div class="form-control rounded-0 w-100 h-100 border-0 py-3" contenteditable="true" 
+                    
+                    innerHTML={{returnedData.correspondence_body}}
+                    (input)="change($event)" tabindex="5"></div>
+                </div> -->
+              </div>
+              <!-- <div class="px-3 py-4 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
+                
+                <button (click)="onSubmit($event)" class="btn btn-info mr-3">
+                  Send
+                </button>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip"
+                  data-original-title="Formatting options" data-placement="top">
+                  <i class="fas fa-font color-fusion-300"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip"
+                  data-original-title="Attach files" data-placement="top">
+                  <i class="fas fa-paperclip color-fusion-300"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip"
+                  data-original-title="Insert photo" data-placement="top">
+                  <i class="fas fa-camera color-fusion-300"></i>
+                </a>
+                <div class="ml-auto">
+                  <a href="javascript:void(0);" class="btn btn-icon fs-xl" data-toggle="tooltip"
+                    data-original-title="Disregard draft" data-placement="top">
+                    <i class="fas fa-trash color-fusion-300"></i>
+                  </a>
+                  <a href="javascript:void(0);" class="btn btn-icon fs-xl width-1" data-toggle="tooltip"
+                    data-original-title="More options" data-placement="top">
+                    <i class="fas fa-ellipsis-v-alt color-fusion-300"></i>
+                  </a>
+
+                  
+                </div>
+                
+              </div> -->
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>

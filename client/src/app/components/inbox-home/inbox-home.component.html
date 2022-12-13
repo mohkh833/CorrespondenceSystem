@@ -1,0 +1,159 @@
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">{{"POP UP.Confirmation Message" | translate}}</h2>
+            </div>
+            <div class="modal-body">
+                <h3>{{"POP UP.Do you confirm to delete this message" | translate}}</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="deleteMessage(checkAllValue)">
+                    {{"POP UP.Confirm" | translate}}
+                </button>
+                <button type="button" class="btn btn-danger" (click)="closePopup()">
+                    {{"POP UP.No, I don't" | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="slide-backdrop" data-action="toggle" data-class="slide-on-mobile-left-show" data-target="#js-inbox-menu">
+</div> <!-- end left slider -->
+<!-- inbox container -->
+<div class="d-flex flex-column flex-grow-1 bg-white">
+    <!-- inbox header -->
+    <div class="flex-grow-0">
+        <!-- inbox title -->
+        <div
+            class="d-flex align-items-center pl-2 pr-3 py-3 pl-sm-3 pr-sm-4 py-sm-4 px-lg-5 py-lg-4  border-faded border-top-0 border-left-0 border-right-0 flex-shrink-0">
+            <!-- button for mobile -->
+            <a href="javascript:void(0);"
+                class="pl-3 pr-3 py-2 d-flex d-lg-none align-items-center justify-content-center mr-2 btn"
+                data-action="toggle" data-class="slide-on-mobile-left-show" data-target="#js-inbox-menu">
+                <i class="fal fa-ellipsis-v h1 mb-0 "></i>
+            </a>
+            <!-- end button for mobile -->
+            <h1 class="subheader-title ml-1 ml-lg-0">
+                <i *ngIf="pageName=='Inbox'" class="fas fa-folder-open mr-2 hidden-lg-down"></i>
+                <i *ngIf="pageName=='Sent'" class="fas fa-paper-plane  mr-2 hidden-lg-down"></i>
+                <i *ngIf="pageName=='Starred'" class="fas fa-star  mr-2 hidden-lg-down"></i>
+                <i *ngIf="pageName=='Trash'" class="fas fa-trash  mr-2 hidden-lg-down"></i>
+                <i *ngIf="pageName=='Draft'" class="fas fa-edit  mr-2 hidden-lg-down"></i>
+                {{"HOME." + pageName.toUpperCase() | translate }}
+            </h1>
+            <div class="d-flex position-relative ml-auto" style="max-width: 23rem;">
+                <button class="position-absolute pos-right   px-2 py-1 mt-1 
+                mr-1
+                "  *ngIf="query!='' " style="background:none; border: none;" (click)="emptySearchBar()">
+                    <i  class="fa fa-times fs-lg mt-1" style="color:#5f646a"></i>
+                </button>
+                <i class="fas fa-search position-absolute pos-left fs-lg px-3 py-2 mt-1"></i>
+                <input type="text" class="form-control bg-subtlelight pl-6" placeholder="{{ placeholderText|translate}}"
+                    [(ngModel)]="query" (ngModelChange)="this.queryUpdate.next($event)">
+            </div>
+        </div>
+        <!-- end inbox title -->
+        <!-- inbox button shortcut -->
+        <div
+            class="d-flex flex-wrap align-items-center pl-3 pr-1 py-2 px-sm-4 px-lg-5 border-faded border-top-0 border-left-0 border-right-0">
+            <div class="flex-1 d-flex align-items-center">
+                <div class="custom-control custom-checkbox mr-2 mr-lg-2 d-inline-block">
+                    <input type="checkbox" class="custom-control-input" id="js-msg-select-all"
+                        (change)="checkAll($event)" #checkAllValue>
+                    <label class="custom-control-label bolder" for="js-msg-select-all"></label>
+                </div>
+                <a (click)="refresh()" class="btn btn-icon rounded-circle mr-1">
+                    <i class="fas fa-redo fs-md"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-icon rounded-circle mr-1">
+                    <i class="fas fa-exclamation-circle fs-md"></i>
+                </a>
+                <a (click)="openPopup()" id="js-delete-selected" class="btn btn-icon rounded-circle mr-1">
+                    <i class="fas fa-trash fs-md"></i>
+                </a>
+            </div>
+            <div class="text-muted mr-1 mr-lg-3 ml-auto">
+                {{current}} - {{currentPage * limit > messages.numOfRecords ?
+                messages.numOfRecords : currentPage * limit}} <span> of {{messages.numOfRecords}}
+                </span>
+            </div>
+            <div class="d-flex flex-wrap">
+                <button class="btn btn-icon rounded-circle" [disabled]="prevDisabled" (click)="prevPage()"><i
+                        class="fal fa-chevron-left fs-md"></i></button>
+                <button class="btn btn-icon rounded-circle" [disabled]="nextDisabled" (click)="nextPage()"><i
+                        class="fal fa-chevron-right fs-md"></i></button>
+            </div>
+        </div>
+        <!-- end inbox button shortcut -->
+    </div>
+    <!-- end inbox header -->
+    <!-- inbox message -->
+    <div class="flex-wrap align-items-center flex-grow-1 position-relative bg-gray-50" style="height: 70vh;">
+        <div class="postion-absolute pos-top pos-bottom w-100 section" style="overflow:hidden; overflow-y:auto;">
+            <div class="d-flex flex-column" style="max-height: 70vh;">
+                <!-- message list (the part that scrolls) -->
+                <ul id="js-emails" class="notification notification-layout-2" *ngFor="let message of messages.data">
+                    <li
+                        [ngClass]="{ 'unread' : message.message_status === 'sent' && path!=='/draft' && path!=='/sent'  ,'read': message.message_status === 'seen' || message.message_status === 'received' || message.message_status === 'rejected' || path==='/draft' || path==='/sent' , 'state-selected': message.selected==true}">
+
+                        <div
+                            class="d-flex align-items-center px-3 px-sm-4 px-lg-5 py-1 py-lg-0 height-4 height-mobile-auto">
+                            <div class="custom-control custom-checkbox mr-3 order-1">
+                                <input type="checkbox" class="custom-control-input" id={{message._id}}
+                                    [value]="message.threadId" (change)="handleCheckBox($event,message._id)"
+                                    [checked]="message.selected">
+                                <label class="custom-control-label" for={{message._id}}></label>
+                            </div>
+
+                            <a *ngIf="!path.startsWith('/trash')" (click)="starMessage(message._id, message.ThreadStarred, message.threadId)"
+                                class="d-flex align-items-center py-1 ml-2 mt-4 mt-lg-0 ml-lg-0 mr-lg-4 fs-lg  order-3 order-lg-2 "
+                                [ngStyle]="message.ThreadStarred == true ?{'color': 'orange'} : null"><i
+                                    [ngClass]="message.ThreadStarred == true ? 'fas fa-star' : 'fal fa-star'"></i></a>
+                            <div routerLink="{{message.isDrafted== true && (pathName=='draft' || pathName=='starred') && message.isDraftedReplyExists== false ? '/draft/' + message._id : message.isDraftedReplyExists== true && pathName=='draft' ? '/draft/threadId/' + message.threadId + '/replyId/'+ message._id + '/last-reply/' + message.replyTo    : '/'+ pathName+ '/' +message.threadId}}" 
+                                class="d-flex flex-row flex-wrap flex-1 align-items-stretch align-self-stretch order-2 order-lg-3">
+                                <div class="row w-100" 
+                                
+                                >
+                                    <a *ngIf="message.replyTo == null &&message.isDrafted"
+                                        class="name d-flex width-sm align-items-center pt-1 pb-0 py-lg-1 col-12 col-lg-auto"
+                                        style="color: red; font-weight:lighter;">Draft</a>
+
+                                    <a *ngIf="message.isDraftedReplyExists==true"
+                                        class="name d-flex width-sm align-items-center pt-1 pb-0 py-lg-1 col-12 col-lg-auto"
+                                        style="color: red; font-weight:lighter;">Drafted Reply</a>
+
+                                    <a *ngIf="message.correspondence_subject != ''"
+                                        class="name d-flex width-sm align-items-center pt-1 pb-0 py-lg-1 col-12 col-lg-auto">{{message.correspondence_subject}}</a>
+                                    <a *ngIf="message.correspondence_subject == ''"
+                                        class="name d-flex width-sm align-items-center pt-1 pb-0 py-lg-1 col-12 col-lg-auto">(no
+                                        subject)</a>
+                                    <a
+                                        class="name d-flex align-items-center pt-0 pb-1 py-lg-1 flex-1 col-12 col-lg-auto">{{message.correspondence_body}}</a>
+                                </div>
+                            </div>
+
+                            <div *ngIf="message.isDrafted==false"
+                                class="fs-sm text-muted ml-auto hide-on-hover-parent order-4 position-on-mobile-absolute pos-top pos-right mt-2 mr-3 mr-sm-4 mt-lg-0 mr-lg-0">
+                                {{message.sent_date}}</div>
+                            <div *ngIf="message.isDrafted==true"
+                                class="fs-sm text-muted ml-auto hide-on-hover-parent order-4 position-on-mobile-absolute pos-top pos-right mt-2 mr-3 mr-sm-4 mt-lg-0 mr-lg-0">
+                                {{message.draftedDate}}</div>
+                        </div>
+                        
+                    </li>
+ 
+                </ul>
+                <div  *ngIf="isShown" style="display: flex; justify-content:center;">
+                    <p style="font-size: 40px; padding:30px; color:#505050">{{notFoundMessageText| translate}}</p>
+                </div>
+                <!-- end message list -->
+            </div>
+        </div>
+    </div>
+    <!-- end inbox message -->
+</div>
+<!-- end inbox container -->
+<!-- compose message -->

@@ -1,0 +1,75 @@
+<div id="panel-compose" class="panel w-100 position-fixed pos-bottom pos-right mb-0 z-index-cloud mr-lg-4 shadow-3 border-bottom-left-radius-0 border-bottom-right-radius-0 expand-full-height-on-mobile expand-full-width-on-mobile shadow" style="max-width:40rem; height:35rem;" [style.display]="composeService.displayState">
+    <form [formGroup]="messageForm">
+    <div class="position-relative h-100 w-100 d-flex flex-column">
+        <!-- desktop view -->
+        <div class="panel-hdr bg-fusion-600 height-4 d-none d-sm-none d-lg-flex">
+            <h4 class="flex-1 fs-lg color-white mb-0 pl-3">
+                Reply
+            </h4>
+            <div class="panel-toolbar pr-2">
+                <a href="javascript:void(0);" class="btn btn-icon btn-icon-light fs-xl mr-1" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen" data-placement="bottom">
+                    <i class="fal fa-expand-alt"></i>
+                </a>
+                <a (click)="hideWindow()" class="btn btn-icon btn-icon-light fs-xl"  data-class="d-flex" data-target="#panel-compose" data-toggle="tooltip" data-original-title="Save & Close" data-placement="bottom">
+                    <i class="fal fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <!-- end desktop view -->
+        <!-- mobile view -->
+        <div class="d-flex d-lg-none align-items-center px-3 py-3 bg-faded  border-faded border-top-0 border-left-0 border-right-0 flex-shrink-0">
+            <!-- button for mobile -->
+            <!-- end button for mobile -->
+            <h3 class="subheader-title">
+                Reply
+            </h3>
+            <div class="ml-auto">
+                <button type="button" class="btn btn-outline-danger" data-action="toggle" data-class="d-flex" data-target="#panel-compose">Cancel</button>
+            </div>
+        </div>
+        <!-- end mobile view -->
+        
+        <div class="panel-container show rounded-0 flex-1 d-flex flex-column">
+            
+            <div class="px-3">
+                <div>
+                    <span id="message-to" type="text" 
+                    class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 pr-5" tabindex="2">To {{composeService.replyData.from_email}}</span>
+                    <a href="javascript:void(0)" class="position-absolute pos-right pos-top mt-3 mr-4" data-action="toggle" data-class="d-block" data-target="#message-to-cc" data-focus="message-to-cc" data-toggle="tooltip" data-original-title="Add Cc recipients" data-placement="bottom">Cc</a>
+                    <input id="message-to-cc" type="text" placeholder="Cc"
+                    formControlName="cc_entity" 
+                    class="form-control border-top-0 border-left-0 border-right-0 px-0 rounded-0 fs-md mt-2 d-none" tabindex="3">
+                    
+                </div>
+            </div>
+            <div class="flex-1" style="overflow-y: auto;">
+                <div class="form-control rounded-0 w-100 h-100 border-0 py-3" contenteditable="true"
+                (input)="change($event)"
+                tabindex="5">
+                </div>
+            </div>
+            <div class="px-3 py-4 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
+                <button   class="btn btn-info mr-3">Send</button>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip" data-original-title="Formatting options" data-placement="top">
+                    <i class="fas fa-font color-fusion-300"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip" data-original-title="Attach files" data-placement="top">
+                    <i class="fas fa-paperclip color-fusion-300"></i>
+                </a>
+                <a href="javascript:void(0);" class="btn btn-icon fs-xl mr-1" data-toggle="tooltip" data-original-title="Insert photo" data-placement="top">
+                    <i class="fas fa-camera color-fusion-300"></i>
+                </a>
+                <div class="ml-auto">
+                    <a href="javascript:void(0);" class="btn btn-icon fs-xl" data-toggle="tooltip" data-original-title="Disregard draft" data-placement="top">
+                        <i class="fas fa-trash color-fusion-300"></i>
+                    </a>
+                    <a href="javascript:void(0);" class="btn btn-icon fs-xl width-1" data-toggle="tooltip" data-original-title="More options" data-placement="top">
+                        <i class="fas fa-ellipsis-v-alt color-fusion-300"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</form>
+</div> <!-- end compose message -->

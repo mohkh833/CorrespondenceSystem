@@ -1,0 +1,68 @@
+::ng-deep .redNoMatch
+{
+  color:white;
+  background: #FD1381 !important;
+}
+
+::ng-deep .Error
+{
+  color:white;
+  background: red !important;
+}
+
+
+/* :host {
+    display: contents;
+} */
+
+.section {
+  overflow-y: auto;
+  direction: ltr;
+  scrollbar-color: #d1d1d1 #e4e4e4;
+  scrollbar-width: thin;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.section::-webkit-scrollbar {
+  height: 4px;
+  width: 4px; 
+}
+.section::-webkit-scrollbar-corner,
+.section-scrollbar::-webkit-scrollbar-corner{
+  width: 40px;
+}
+
+.section::-webkit-scrollbar-thumb:vertical,
+.section-scrollbar::-webkit-scrollbar-thumb:vertical {
+  background-color: #666; }
+
+.section::-webkit-scrollbar-track {
+  background-color: transparent; 
+}
+
+.section::-webkit-scrollbar-thumb {
+  background-color: #666;
+}
+/* 
+.custom-scroll,
+.custom-scrollbar {
+overflow: hidden;
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch; }
+.custom-scroll::-webkit-scrollbar-track-piece,
+.custom-scrollbar::-webkit-scrollbar-track-piece {
+  background-color: transparent; }
+.custom-scroll::-webkit-scrollbar-thumb:vertical,
+.custom-scrollbar::-webkit-scrollbar-thumb:vertical {
+  background-color: #666; }
+.custom-scroll::-webkit-scrollbar,
+.custom-scrollbar::-webkit-scrollbar {
+  height: 4px;
+  width: 4px; }
+.custom-scroll::-webkit-scrollbar-corner,
+.custom-scrollbar::-webkit-scrollbar-corner {
+  width: 40px; }
+.custom-scroll::-webkit-scrollbar-thumb:vertical,
+.custom-scrollbar::-webkit-scrollbar-thumb:vertical {
+  background-color: #666; } */
